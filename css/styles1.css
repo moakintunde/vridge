@@ -1,0 +1,10 @@
+.navbar-brand {
+    font-weight: bold;
+
+}
+.container-fluid{
+    background-color: #fff;
+}
+.dropdown-item{
+    text-align: center;
+}
