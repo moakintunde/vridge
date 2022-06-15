@@ -1,0 +1,68 @@
+body {
+    width: 100vw;
+    padding-top: 40px;
+    margin:0 auto;
+    background-color: azure;
+}
+
+.container {
+    font-family: "Montserrat";
+    width:315px;
+    height: auto;
+    margin: 3% auto;
+    padding: 20px;
+    border-radius: 5px;
+    text-align: center;
+    background: #fff;
+}
+
+.nav-link{
+    color: white;
+}
+.nav-link:hover{
+    color: aquamarine;
+}
+
+/* Title page */
+.btn{
+    font-family: "Montserrat";
+    font-size: medium;
+}
+
+/* content */
+.ema{
+    width: 90%;
+    height: 6rem;
+    align-items: center;
+    
+    
+}
+
+
+.user-content{
+    display: block;
+    justify-content: center;
+}
+#mid-content{
+    display: flex;
+    justify-content: center;
+    padding: 5px;
+}
+#mid-content .col-6{
+    padding: 7px 0;
+    background-color: #fff;
+    margin: 0;
+    
+}
+.ema p{
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+.ema img{
+    width: 50%;
+    padding: 8px 0 7px;
+}
+
+#mid-content .btn{
+    padding: 0;
+}
