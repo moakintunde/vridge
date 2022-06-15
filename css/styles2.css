@@ -29,16 +29,12 @@ body {
     font-size: medium;
 }
 
-/* content */
+/* user content */
 .ema{
     width: 90%;
     height: 6rem;
-    align-items: center;
-    
-    
+    align-items: center;    
 }
-
-
 .user-content{
     display: block;
     justify-content: center;
@@ -60,9 +56,11 @@ body {
 }
 .ema img{
     width: 50%;
-    padding: 8px 0 7px;
+    padding: 15px 0 7px;
 }
 
 #mid-content .btn{
-    padding: 0;
+    display: block;
+    justify-content: center;
+    align-items: center;
 }
