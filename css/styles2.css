@@ -60,7 +60,6 @@ body {
 }
 
 #mid-content .btn{
-    display: block;
     justify-content: center;
     align-items: center;
 }
