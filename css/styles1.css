@@ -4,6 +4,7 @@
 }
 .container-fluid{
     background-color: #fff;
+    width:375px;
 }
 #login{
     padding: 30px 24px;
