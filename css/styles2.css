@@ -42,7 +42,7 @@ body {
 #mid-content{
     display: flex;
     justify-content: center;
-    padding: 5px;
+    padding: 5px 18px;
 }
 #mid-content .col-6{
     padding: 7px 0;
