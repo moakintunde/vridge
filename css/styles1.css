@@ -6,8 +6,8 @@
     background-color: #fff;
     width:375px;
 }
-#login{
-    padding: 30px 24px;
+#login, #sign-up{
+    padding: 30px 20px;
     font-size: 1rem;
     font-family: "Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
 }
