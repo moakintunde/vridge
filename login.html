@@ -66,16 +66,19 @@
         email:"adegokeddj236@gmail.com",
         username:"techbbird2345",
         password:"mypassword",
-        logins:{
+        logins:[{
           active:false,
           lastLogin:new Date()
-        }
+        }]
       },
       {
         email:"moakintunde@gmail.com",
         username:"techbbird2345",
         password:"mypassword",
-        logins: []
+        logins: [{
+          active:false,
+          lastLogin:new Date()
+        }]
       },
 
     ];
@@ -113,15 +116,24 @@
 
           }
 
+          ourUser.logins.push({
+            active:true,
+            lastLogin:event.timeStamp
+            
+          })
+
+          console.log(ourUser)
+
           successNotification({
             title:"Success",
             message:"Login Successful"
           })
 
+         
           setTimeout(function(){
             window.location.href = './content.html'
 
-          },2000)
+          },200)
 
 
         
