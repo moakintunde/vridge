@@ -29,19 +29,19 @@
           </nav>
 
         <section id="sign-up">
-            <form>
+            <form id="sign-up-form">
                 <div class="form-row">
                   <div class="col-md-6 mb-2">
-                    <label for="validationDefault01">First name</label>
-                    <input type="text" class="form-control" id="validationDefault01" placeholder="First name" required>
+                    <label for="firstName">First name</label>
+                    <input type="text" class="form-control" id="firstName" placeholder="First name" required>
                   </div>
                   <div class="col-md-6 mb-2">
-                    <label for="validationDefault02">Last name</label>
-                    <input type="text" class="form-control" id="validationDefault02" placeholder="Last name" required>
+                    <label for="lastName">Last name</label>
+                    <input type="text" class="form-control" id="lastName" placeholder="Last name" required>
                   </div>
                   <div class="col-md-6 mb-2">
-                    <label for="exampleFormControlInput1">email address</label>
-                    <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com" required>
+                    <label for="email">email address</label>
+                    <input type="email" class="form-control" id="email" placeholder="name@example.com" required>
                   </div>
                   <div class="col-md-6 mb-2">
                     <label for="validationDefaultUsername">username</label>
@@ -92,6 +92,12 @@
     <script >
 
     window.addEventListener('DOMContentLoaded', (event) => {
+      const signUpForm = document.getElementById('sign-up-form');
+      signUpForm.addEventListener('submit', function(event){
+        event.preventDefault();
+        const formData = new FormData(signUpForm);
+
+      })
       
     });
     </script>
