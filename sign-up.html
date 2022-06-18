@@ -23,7 +23,7 @@
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
               <div class="navbar-nav">
                 <a class="nav-item nav-link" href="#">Sign up<span class="sr-only">(current)</span></a>
-                <a class="nav-item nav-link" href="./content.html">Login</a>
+                <a class="nav-item nav-link" href="./login.html">Login</a>
               </div>
             </div>
           </nav>
@@ -33,49 +33,49 @@
                 <div class="form-row">
                   <div class="col-md-6 mb-2">
                     <label for="firstName">First name</label>
-                    <input type="text" class="form-control" id="firstName" placeholder="First name" required>
+                    <input type="text" class="form-control" id="firstName" name="firstName" placeholder="First name" required>
                   </div>
                   <div class="col-md-6 mb-2">
                     <label for="lastName">Last name</label>
-                    <input type="text" class="form-control" id="lastName" placeholder="Last name" required>
+                    <input type="text" class="form-control" id="lastName" placeholder="Last name" name="lastName" required>
                   </div>
                   <div class="col-md-6 mb-2">
                     <label for="email">email address</label>
-                    <input type="email" class="form-control" id="email" placeholder="name@example.com" required>
+                    <input type="email" class="form-control" id="email" placeholder="name@example.com" name="email" required>
                   </div>
                   <div class="col-md-6 mb-2">
-                    <label for="validationDefaultUsername">username</label>
+                    <label for="username">username</label>
                     <div class="input-group">
                       <div class="input-group-prepend">
-                        <span class="input-group-text" id="inputGroupPrepend2">@</span>
+                        <span class="input-group-text" id="usernameSign">@</span>
                       </div>
-                      <input type="text" class="form-control" id="validationDefaultUsername" placeholder="Username" aria-describedby="inputGroupPrepend2" required>
+                      <input type="text" class="form-control" id="username" autocomplete="username" name="username" placeholder="Username" aria-describedby="usernameSign" required>
                     </div>
                   </div>
                   <div class="col-6 mb-2">
-                    <label for="inputPassword4">password</label>
-                    <input type="password" class="form-control" id="inputPassword4" placeholder="Password"required>
+                    <label for="password">password</label>
+                    <input type="password" class="form-control" id="password" placeholder="Password" name="password" autocomplete="new-password" required>
                   </div>
                   <div class="col-6 mb-2">
-                    <label for="inputPassword4">confirm password</label>
-                    <input type="password" class="form-control" id="inputPassword4" placeholder="confirm password" required>
+                    <label for="confirmPassword">confirm password</label>
+                    <input type="password" class="form-control" id="confirmPassword" placeholder="confirm password" autocomplete="new-password" name="confirmPassword" required>
                   </div>
                 </div>
                 
                 <div class="custom-file mb-3">
-                    <input type="file" class="custom-file-input" id="customFile">
-                    <label class="custom-file-label" for="customFile">Choose file</label>
+                    <input type="file" class="custom-file-input" id="profileImage" name="profileImage" accept="image/*">
+                    <label class="custom-file-label" for="profileImage">Choose file</label>
                   </div>
                 
                 <div class="form-group">
                   <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="invalidCheck2" required>
-                    <label class="form-check-label" for="invalidCheck2">
+                    <input class="form-check-input" type="checkbox" value="" id="agreementCheck" required>
+                    <label class="form-check-label" for="agreementCheck">
                       Agree to terms and conditions
                     </label>
                   </div>
                 </div>
-                <button class="btn btn-outline-success" type="submit">Submit</button>
+                <button class="btn btn-outline-success" name='submit' type="submit">Submit</button>
               </form>
             <h6 class="text-dark" style="padding-top: 10px;">Already have an Account? <a class="text-success" href="./login.html">Login</a> </h6>
             
@@ -93,9 +93,75 @@
 
     window.addEventListener('DOMContentLoaded', (event) => {
       const signUpForm = document.getElementById('sign-up-form');
+      const confirmPassword = document.getElementById("confirmPassword")
+      const errorNotification = window.createNotification({theme: 'error'});
+      const successMessage = window.createNotification({theme:'success'})
+      confirmPassword.addEventListener('change',function(event){
+        const password = document.getElementById("password");
+       
+        if (password.value !== confirmPassword.value){
+          errorNotification({ 
+              title: 'Error',
+              message: 'password not match',
+            });
+            throw Error("password not match");
+        }
+
+      });
       signUpForm.addEventListener('submit', function(event){
         event.preventDefault();
+       
         const formData = new FormData(signUpForm);
+        const username = formData.get('username');
+        const email = formData.get('email');
+
+        const users = localStorage.getItem('vridge-users');
+        const deserializedUser = JSON.parse(users)
+        if(deserializedUser){
+          const emailExists =  deserializedUser.filter(user => user.email == email)
+          const usernameExists = deserializedUser.filter(user => user.username == username)
+          if(emailExists[0]){
+            console.log(emailExists[0])
+            errorNotification({ 
+              title: 'Error',
+              message: 'User with the given email already exists',
+            });
+            signUpForm.reset();
+            throw Error("password not match");
+
+          }
+
+          if(usernameExists[0]){
+            console.log(usernameExists[0])
+            errorNotification({ 
+              title: 'Error',
+              message: 'User with the given username already exists',
+            });
+            signUpForm.reset();
+            throw Error("password not match");
+          }
+        }
+        const newUser ={}
+
+        for(const pair of formData.entries()) {
+          newUser[pair[0]] = pair[1]
+        }
+        newUser['vridge-items'] =[]
+        newUser['logins'] = []
+        let updatedUsers =[];
+        if(deserializedUser){
+           updatedUsers =[ ...deserializedUser, newUser]
+        }else{
+          updatedUsers.push(newUser);
+          
+        }
+        console.log(updatedUsers)
+        const serializeUsers = JSON.stringify(updatedUsers)
+        localStorage.setItem('vridge-users',serializeUsers)
+        successMessage(
+          {message:"signup successful, you can now login with your username and password"}
+        )
+        setTimeout(location.replace('./login.html'),200)
 
       })
       

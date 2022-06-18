@@ -34,12 +34,12 @@
                 <form class="login-form" id="login-form">
                     <div class="form-group">
                       <label for="username">Username</label>
-                      <input type="text" class="form-control" id="username" aria-describedby="email feed" placeholder="Username or email" required>
+                      <input type="text" class="form-control" id="username" aria-describedby="email feed" autocomplete="username" placeholder="Username or email" required>
                     
                     </div>
                     <div class="form-group">
                       <label for="user-secret">Password</label>
-                      <input type="password" class="form-control" id="user-secret" placeholder="Password" required>
+                      <input type="password" class="form-control" id="user-secret" placeholder="Password" autocomplete="current-password" required>
                     </div>
                     <div class="form-check" style="padding-bottom: 5px;">
                       <input type="checkbox" class="form-check-input" id="remember-me">
@@ -63,27 +63,17 @@
   window.addEventListener('DOMContentLoaded', (event) => {
     // this should be fetch from database
     // create database for user
-    const users = [
-      {
-        email:"adegokeddj236@gmail.com",
-        username:"techbbird2345",
-        password:"mypassword",
-        logins:[{
-          active:false,
-          lastLogin:new Date()
-        }]
-      },
-      {
-        email:"moakintunde@gmail.com",
-        username:"momoneyagbacoder",
-        password:"mypassword",
-        logins: [{
-          active:false,
-          lastLogin:new Date()
-        }]
-      },
+    const users = JSON.parse(localStorage.getItem('vridge-users'))
+    console.log(users)
 
-    ];
+    if(!users){
+      const infoNotification = window.createNotification({theme: 'info'});
+      infoNotification({
+        message:"user not found please sign up to user VRIDGE"
+      })
+
+      location.replace('./sign-up.html');
+    }
 
     const form = document.getElementById('login-form');
     if(form != null){
@@ -117,20 +107,23 @@
             throw Error("password or username incorrect");
 
           }
-
-          ourUser.logins.push({
+          const loginUser = {...ourUser}
+        
+          loginUser.logins.push({
             active:true,
             lastLogin:event.timeStamp
             
-          })
+          });
+          users[userIndex] = loginUser;
 
-          console.log(ourUser)
+          localStorage.setItem('vridge-users', JSON.stringify(users));
+          sessionStorage.setItem('vridge-login',"yes");
+          sessionStorage.setItem('vridge-username',loginUser['username']);
 
           successNotification({
             title:"Success",
             message:"Login Successful"
           })
-
          
           setTimeout(function(){
             window.location.href = './content.html'
